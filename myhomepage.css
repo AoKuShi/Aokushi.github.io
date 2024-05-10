@@ -58,19 +58,6 @@ table {
   justify-content: center; /* Center items horizontally */
 }
 
-
-/* Desktop layout */
-@media (min-width: 721px) {
-  .grid-container {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-areas:
-          "header header"
-          "menu menu"
-          "introduction introduction"
-          "study project_team";
-  }
-}
-
 /* Mobile layout */
 @media (max-width: 720px) {
   .grid-container {
