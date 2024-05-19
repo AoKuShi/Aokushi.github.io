@@ -1,172 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DOS</title>
-  <link rel="stylesheet" href="myhomepage.css">
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web CMD Emulator</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5em;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Added to hide body overflow */
+        }
 
+        #terminal {
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .prompt {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .prompt span {
+            flex-shrink: 0;
+            padding-right: 10px;
+        }
+
+        .prompt textarea {
+            background: none;
+            border: none;
+            color: #0f0;
+            outline: none;
+            resize: none;
+            overflow: hidden;
+            width: 100%;
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            min-height: 1.5em;
+            box-sizing: border-box;
+            padding-left: 5px;
+            margin-bottom: 10px;
+        }
+
+        .output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="grid-container">
-    <header id="header">
-      <h1>Welcome to Taehwan Kim's Homepage</h1>
-      <h1>You can indirectly execute DOS's built-in commands here</h1>
-    </header>
+    <div id="terminal">
+        hello
+    </div>
+    <script>
+        const terminal = document.getElementById('terminal');
+        const root = {
+            name: 'root',
+            type: 'dir',
+            children: {
+                test: {
+                    name: 'test',
+                    type: 'dir',
+                    children: {
+                        'text.txt': {
+                            name: 'text.txt',
+                            type: 'file',
+                            content: 'hello\nhi\n111'
+                        }
+                    }
+                }
+            }
+        };
 
-    <nav id="menu">
-      <ul>
-        <li><a href="#intro">About Me</a></li>
-        <li><a href="#study">SW Studies</a></li>
-        <li><a href="#project_team">Project Team Members</a></li>
-      </ul>
-    </nav>
+        let currentDir = root;
+        let currentPath = [];
+        let currentPromptPath = 'C:\\';
 
-    <section id="introduction">
-      <img src="images/image01.png" alt="Cute" width="320">
-      <h4>1. CLS : CLear Screen</h4>
-      <h4>2. CD : Change Directory</h4>
-      <h4>3. COPY</h4>
-      <h4>4. DIR : DIRectory</h4>
-      <h4>5. DEL : DELete</h4>
-      <h4>6-1. MD : Make Directory</h4>
-      <h4>6-2. RD : Remove Directory</h4>
-      <h4>7. REN : REName</h4>
-      <h4>8. VER : VERsion</h4>
-      <h4>9. TYPE</h4>
-      <hr>
-      <p>
-        Welcome to Taehwan Kim's homepage.
-      </p>
-      <p>
-        This website was created as a practice example for the Interface Design Practice class.
-      </p>
-      <hr>
-    </section>
+        function updatePromptPath() {
+            const path = currentPath.length > 0 ? `C:\\${currentPath.join('\\')}` : 'C:\\';
+            currentPromptPath = path;
+        }
 
-    <section id="study">
-      <h3>I am currently studying software.</h3>
-      <p>&nbsp;</p>
-      <table border="2">
-        <caption><strong>Subjects I am learning this semester</strong></caption>
-        <tr>
-          <td>Subject</td>
-          <td>Time</td>
-          <td>Description</td>
-        </tr>
-        <tr>
-          <td>Interface Design Practice</td>
-          <td>
-            <ul>
-              <li>Tue 10:30 AM ~ 11:45 AM</li>
-              <li>Fri 9:00 AM ~ 10:15 AM</li>
-            </ul>
-          </td>
-          <td>Creating websites using HTML, CSS, JavaScript</td>
-        </tr>
-        <tr>
-          <td>Algorithms</td>
-          <td>
-            <ul>
-              <li>Wed 9:00 AM ~ 10:15 AM</li>
-              <li>Fri 10:30 AM ~ 11:45 AM</li>
-            </ul>
-          </td>
-          <td>Understanding and utilizing algorithms</td>
-        </tr>
-        <tr>
-          <td>Basic JAVA Practice</td>
-          <td>
-            <ul>
-              <li>Tue 9:00 AM ~ 10:15 AM</li>
-              <li>Wed 10:30 AM ~ 11:45 AM</li>
-            </ul>
-          </td>
-          <td>Programming with JAVA</td>
-        </tr>
-        <tr>
-          <td>True Polytechnic Life and Vision</td>
-          <td>
-            <ul>
-              <li>Fri 9:00 AM ~ 3:40 PM (3/11~3/29)</li>
-            </ul>
-          </td>
-          <td>Character education</td>
-        </tr>
-        <tr>
-          <td>Basic Statistics</td>
-          <td>
-            <ul>
-              <li>Fri 9:00 AM ~ 11:50 AM</li>
-            </ul>
-          </td>
-          <td>Statistics languages like R</td>
-        </tr>
-        <tr>
-          <td>Invention and Entrepreneurship</td>
-          <td>
-            <ul>
-              <li>Wed 12:50 PM ~ 2:40 PM</li>
-            </ul>
-          </td>
-          <td>Progress in interdisciplinary project competitions</td>
-        </tr>
-        <tr>
-          <td>Database</td>
-          <td>
-            <ul>
-              <li>Tue 12:50 PM ~ 3:40 PM</li>
-            </ul>
-          </td>
-          <td>Programming with databases using SQL</td>
-        </tr>
-        <tr>
-          <td>Computer Architecture</td>
-          <td>
-            <ul>
-              <li>Thu 9:00 AM ~ 11:50 AM</li>
-            </ul>
-          </td>
-          <td>Theory and practice of computer hardware</td>
-        </tr>
-        <tr>
-          <td>General Industrial Safety</td>
-          <td>
-            <ul>
-              <li>Thu 12:50 PM ~ 2:40 PM</li>
-            </ul>
-          </td>
-          <td>Safety education</td>
-        </tr>
-        <tr>
-          <td>English</td>
-          <td>
-            <ul>
-              <li>Wed 2:50 PM ~ 3:40 PM</li>
-            </ul>
-          </td>
-          <td>Conversation-focused English education</td>
-        </tr>
-      </table>
-      <ul>
-        <li><a href="https://www.acmicpc.net/user/rlaahrns022">My BOJ Status</a></li>
-        <li><a href="https://github.com/AoKuShi">My GitHub Status</a></li>
-      </ul>
-      <hr>
-    </section>
+        function createPrompt() {
+            const prompt = document.createElement('div');
+            prompt.className = 'prompt';
+            prompt.innerHTML = `<span>${currentPromptPath}></span> <textarea rows="1"></textarea>`;
+            terminal.appendChild(prompt);
+            const input = prompt.querySelector('textarea');
+            input.focus();
+            input.addEventListener('keydown', handleCommand);
+            input.addEventListener('input', autoResize);
+        }
 
-    <section id="project_team">
-      <h3>Team members working on projects with me</h3>
-      <ul>
-        <li><a href="https://github.com/Minsoolee12345">Minsoo Lee</a></li>
-        <li><a href="https://github.com/0joong">Youngjoong Kim</a></li>
-        <li><a href="https://github.com/chosihyeon">Sihyeon Cho</a></li>
-      </ul>
-    </section>
-  </div>
+        function autoResize(event) {
+            const textarea = event.target;
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        function handleCommand(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                const input = event.target;
+                const command = input.value.trim();
+                input.disabled = true;
+                processCommand(command);
+                createPrompt();
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        }
+
+        function processCommand(command) {
+            const args = command.split(/\s+/);  // Split by any whitespace characters
+            const cmd = args[0].toUpperCase();
+
+            switch (cmd) {
+                case 'CLS':
+                    terminal.innerHTML = '';
+                    break;
+                case 'CD':
+                    changeDirectory(args[1]);
+                    break;
+                case 'COPY':
+                    copyItem(args[1], args[2]);
+                    break;
+                case 'DIR':
+                    listDirectory();
+                    break;
+                case 'DEL':
+                    deleteFile(args[1]);
+                    break;
+                case 'MD':
+                    makeDirectory(args[1]);
+                    break;
+                case 'RD':
+                    removeDirectory(args[1]);
+                    break;
+                case 'REN':
+                    renameFile(args[1], args[2]);
+                    break;
+                case 'VER':
+                    showVersion();
+                    break;
+                case 'TYPE':
+                    typeFile(args[1]);
+                    break;
+                case 'ECHO':
+                    echoToFile(args.slice(1).join(' '));
+                    break;
+                default:
+                    printOutput('인식할 수 없는 명령어입니다.');
+            }
+            updatePromptPath();
+        }
+
+        function changeDirectory(path) {
+            if (path === '..') {
+                if (currentPath.length > 0) {
+                    currentPath.pop();
+                    currentDir = getDirectoryFromPath(currentPath);
+                }
+            } else if (currentDir.children[path] && currentDir.children[path].type === 'dir') {
+                currentPath.push(path);
+                currentDir = currentDir.children[path];
+            } else {
+                printOutput('지정한 경로를 찾을 수 없습니다.');
+            }
+        }
+
+        function getDirectoryFromPath(pathArray) {
+            let dir = root;
+            for (const segment of pathArray) {
+                if (dir.children[segment] && dir.children[segment].type === 'dir') {
+                    dir = dir.children[segment];
+                } else {
+                    printOutput('지정한 경로를 찾을 수 없습니다.');
+                    return root;
+                }
+            }
+            return dir;
+        }
+
+        function copyItem(src, dest) {
+            const srcPath = src.split('\\');
+            const destPath = dest.split('\\');
+            const srcName = srcPath.pop();
+            const destName = destPath.pop();
+            const srcDir = getDirectoryFromPath(srcPath);
+            const destDir = getDirectoryFromPath(destPath);
+
+            if (srcDir.children[srcName]) {
+                const srcItem = srcDir.children[srcName];
+                if (destDir.children[destName]) {
+                    printOutput('같은 이름의 파일이나 디렉터리가 이미 존재합니다.');
+                    return;
+                }
+
+                if (srcItem.type === 'file') {
+                    destDir.children[destName] = { ...srcItem, name: destName };
+                    printOutput(`${srcName} 파일을 ${dest} 파일로 복사했습니다.`);
+                } else if (srcItem.type === 'dir') {
+                    destDir.children[destName] = copyDirectory(srcItem);
+                    printOutput(`${srcName} 디렉터리를 ${dest} 디렉터리로 복사했습니다.`);
+                }
+            } else {
+                printOutput('파일이나 디렉터리를 찾을 수 없습니다.');
+            }
+        }
+
+        function copyDirectory(srcDir) {
+            const newDir = { name: srcDir.name, type: 'dir', children: {} };
+            for (const child in srcDir.children) {
+                if (srcDir.children[child].type === 'file') {
+                    newDir.children[child] = { ...srcDir.children[child] };
+                } else if (srcDir.children[child].type === 'dir') {
+                    newDir.children[child] = copyDirectory(srcDir.children[child]);
+                }
+            }
+            return newDir;
+        }
+
+        function listDirectory() {
+            let output = '';
+            for (const name in currentDir.children) {
+                output += `${name}\n`;
+            }
+            printOutput(output.trim());
+        }
+
+        function deleteFile(filename) {
+            if (currentDir.children[filename] && currentDir.children[filename].type === 'file') {
+                delete currentDir.children[filename];
+                printOutput(`${filename} 파일을 삭제했습니다.`);
+            } else {
+                printOutput('파일을 찾을 수 없습니다.');
+            }
+        }
+
+        function makeDirectory(dirname) {
+            if (!currentDir.children[dirname]) {
+                currentDir.children[dirname] = { name: dirname, type: 'dir', children: {} };
+                printOutput(`${dirname} 디렉터리를 만들었습니다.`);
+            } else {
+                printOutput('디렉터리가 이미 존재합니다.');
+            }
+        }
+
+        function removeDirectory(dirname) {
+            if (currentDir.children[dirname] && currentDir.children[dirname].type === 'dir') {
+                if (Object.keys(currentDir.children[dirname].children).length === 0) {
+                    delete currentDir.children[dirname];
+                    printOutput(`${dirname} 디렉터리를 삭제했습니다.`);
+                } else {
+                    printOutput('디렉터리가 비어 있지 않습니다.');
+                }
+            } else {
+                printOutput('디렉터리를 찾을 수 없습니다.');
+            }
+        }
+
+        function renameFile(oldName, newName) {
+            if (currentDir.children[oldName]) {
+                if (currentDir.children[newName]) {
+                    printOutput('같은 이름의 파일이나 디렉터리가 이미 존재합니다.');
+                    return;
+                }
+                currentDir.children[newName] = { ...currentDir.children[oldName], name: newName };
+                delete currentDir.children[oldName];
+                printOutput(`${oldName} 파일의 이름을 ${newName}으로 변경했습니다.`);
+            } else {
+                printOutput('파일을 찾을 수 없습니다.');
+            }
+        }
+
+        function showVersion() {
+            printOutput('Web CMD Emulator v1.0');
+        }
+
+        function typeFile(filename) {
+            if (filename.endsWith('.txt')) {
+                if (currentDir.children[filename] && currentDir.children[filename].type === 'file') {
+                    printOutput(currentDir.children[filename].content);
+                } else {
+                    printOutput('파일을 찾을 수 없습니다.');
+                }
+            } else {
+                printOutput('txt 파일만 읽을 수 있습니다.');
+            }
+        }
+
+        function echoToFile(command) {
+            const match = command.match(/^(.+?)\s+>\s+(.+\.txt)$/);
+            if (match) {
+                const content = match[1];
+                const filename = match[2];
+                if (currentDir.children[filename]) {
+                    printOutput('같은 이름의 파일이 이미 존재합니다.');
+                    return;
+                }
+                currentDir.children[filename] = {
+                    name: filename,
+                    type: 'file',
+                    content: content
+                };
+                printOutput(`${filename} 파일을 생성하고 내용을 추가했습니다: ${content}`);
+            } else {
+                printOutput('잘못된 명령어 형식입니다. 또는 txt 파일만 생성할 수 있습니다.');
+            }
+        }
+
+        function printOutput(text) {
+            const output = document.createElement('div');
+            output.className = 'output';
+            output.textContent = text;
+            terminal.appendChild(output);
+        }
+
+        function adjustFontSize() {
+            let aspectRatio = (window.innerHeight / window.innerWidth) + 1;
+
+            document.querySelector('body').style.fontSize = aspectRatio + 'em';
+        }
+
+        // 페이지 로드 시와 윈도우 크기 변경 시에도 함수 호출
+        window.onload = adjustFontSize;
+        window.onresize = adjustFontSize;
+
+        // Initial prompt creation
+        updatePromptPath();
+        createPrompt();
+
+    </script>
 </body>
 
 </html>
