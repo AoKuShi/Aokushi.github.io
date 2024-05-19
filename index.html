@@ -4,20 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web CMD Emulator</title>
+    <title>Kim_Tae_Hwan</title>
     <style>
+        @font-face {
+            font-family: "DungGeunMo";
+            src: url("font/DungGeunMo.ttf") format("truetype");
+            font-weight: lighter;
+        }
+
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'DungGeunMo', Courier, monospace;
             font-size: 1.5em;
             background-color: #000;
             color: #0f0;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Added to hide body overflow */
+            overflow: hidden;
         }
 
         #terminal {
-            padding: 20px;
+            padding: 10px;
             height: 100vh;
             overflow-y: auto;
             display: flex;
@@ -61,29 +67,109 @@
             word-break: break-word;
             margin-bottom: 20px;
         }
+        
+        .output a {
+            color: #0f0;
+            text-decoration: none;
+        }
+
+        .output a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
     <div id="terminal">
-        hello
+        <div id="welcomeMessage"></div>
     </div>
     <script>
         const terminal = document.getElementById('terminal');
-        const root = {
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const welcomeText = [
+            "-김태환의 홈페이지에 오신 것을 환영합니다.",
+            "-본 페이지에선 Ms-Dos와 윈도우CMD의 핵심 명령어 10가지를 사용해 자유롭게 내용을 탐색, 열람하실 수 있습니다.",
+            "-처음 방문하신 분은 'type command.txt'를 입력해주세요."
+        ];
+
+        let root = {
             name: 'root',
             type: 'dir',
             children: {
-                test: {
-                    name: 'test',
+                프로필: {
+                    name: '프로필',
                     type: 'dir',
                     children: {
-                        'text.txt': {
-                            name: 'text.txt',
+                        성남폴리텍: {
+                            name: '성남폴리텍',
+                            type: 'dir',
+                            children: {
+                                인공지능소프트웨어과: {
+                                    name: '인공지능소프트웨어과',
+                                    type: 'dir',
+                                    children: {
+
+                                        '시간표.txt': {
+                                            name: '시간표.txt',
+                                            type: 'file',
+                                            content: '인터페이스 디자인 실습 | 화 오전 10:30 ~ 11:45, 금 오전 9:00 ~ 10:15 | 홈페이지 만들기 위한 HTML, CSS, JavaScript\n알고리즘 | 수 오전 9:00 ~ 10:15, 금 오전 10:30 ~ 11:45 | 알고리즘, 알고리즘을 활용\nJAVA기초 실습 | 화 오전 9:00 ~ 10:15, 수 오전 10:30 ~ 11:45 | JAVA를 활용한 프로그래밍\n참인폴리텍 생활과 비전 | 금 9:00 ~ 15:40 (3/11~3/29) | 인성 교육\n기초 통계 | 금 오전 9:00 ~ 11:50 | R 등의 통계 언어\n발명과 창업 | 수 오후 12:50 ~ 14:40 | 융합프로젝트 공모전 진행\n데이터베이스 | 화 오후 12:50 ~ 15:40 | SQL, 데이터베이스를 활용한 프로그래밍\n컴퓨터 구조 | 목 오전 9:00 ~ 11:50 | 컴퓨터 하드웨어 이론, 실습\n일반 산업 안전 | 목 오후 12:50 ~ 14:40 | 안전 교육\n영어 | 수 오후 14:50 ~ 15:40 | 회화 중심의 영어 교육'
+                                        },
+
+                                        '학과장님.txt': {
+                                            name: '학과장님.txt',
+                                            type: 'file',
+                                            content: '.....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;............&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,,,----,,,,....................&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.........&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...,-~~::;:::~--,,,,,................&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.........&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....,-~:!!!***!!;:~~-,,,,,...............&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;........&nbsp;....,,-~:;!*====$=**!::~---,,................&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;............,-~:;!**====$$$$$==!;:~~~~-,..............&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;....,.....,-~:;!**==$$$$$$$$$===*!;~~~~-,....&nbsp;...&nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.......,-::;!*===$$$$$$$$$$$$$=***;:~~~--,.......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.....,-~:;!**==$$$$$$$$$$$$$$$===*!;;:~~~-,,...&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....,-:;!**===$$$$$$$$$$$$$$$$$====*!!:~~~--,,,..&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,-:!!**===$$$$$$$$$$$$$$$$$$$====***!;:~~~--,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,-:!****==$$$$$$$$$$$$$#$$$$$$$======**!:~~~~--,,...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...-:!***====$$$$$##############$$$$====***!;:::~~--,,,...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,~;***=====$$$###############$$$========**!!;::~~~---,,.....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,-:!*======$$$$####$$$$$========*==*==*****!!!;;:::~~~--,,....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..-~;**=====$$=$$$$$$=**!;::;;;;;;;!!!********!!!;;;::::~--,,....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,~;!**=======***==*=*!;;~~--------~~~:;!!*******!!!;;;;:~-,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,~;!*****!;;:~-,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,,--~~~::;!!*******!!;!;;~-,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-~:!*====**;::~--,,.&nbsp;..,-:!!*******!!;;;:~--........&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-!*$$$$#####$$$$==**!!;::,.&nbsp;.,:!*==**!!!;;;:-....,,,,,........&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,--:;!*!*!:&nbsp;&nbsp;&nbsp;~=$$$$$$$$$=====*!!!!!;!!!*=:.&nbsp;&nbsp;-****!;;;;:,&nbsp;&nbsp;.-~:::::~~--,,,....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,~~~::;;!**=~&nbsp;,*$$$====**!!;:::~~~~~~~::;;!!;,&nbsp;.,,-~~~,.,.&nbsp;.~::;;!!!;;:~~--,,,...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-:!!!!;;;!!**!,;*==*!!:-,,...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...,--~~~:;*;.&nbsp;-*===*!-&nbsp;&nbsp;.~::;;;:~~-,,,,-----,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~!****====***!~!*!!:-,,.,,---,..&nbsp;&nbsp;.,...,-~:;**!.-*===**!:.&nbsp;-:~:::-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~!*=*=========!!**!!!!!*******!;;::~~---~;;***~,:!****!;:,.-;:;:,.....&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;....&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~!*====$$$$$$$=====$$$$$=====**!!!;;:~~:;!*!;:,~!*====*!:-.,::;;;::;;;::~~--,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~!*===$$$###$$$$$$#$$$$$$==**!!;;;;::;;!***;:~:;*$$$$$=*;---:;!!;;;;;;;;;;;:~~-,,....&nbsp;..&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,~!*==$$$###############$$$$==************=*!::;*$####$$=*~-~:;!!*!!!;;;;;;:::;;:~~-,.,,.&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....~;*==$$$#################$$======*=====*===*!!=$######$$*;:;;!!************!!!!;;:~~~~..&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;.,,..-;**==$$############$$$$$$$===================$########$=*!*!!**======*******!!!;;;;~,...&nbsp;&nbsp;<br>&nbsp;&nbsp;....,,.,:!*==$$$#############$=========*********=$$###########$$=***!**========***!!!!!!;:~-,,..&nbsp;&nbsp;<br>...,,,-,,,~;*==$$$###########@@##@##$$$===******=$$########@#####$=*!***========********!!!!;:~-,.&nbsp;&nbsp;<br>...-~~-,,,~;**==$$$$#################$$$$$$$$$$==$$$######@@@@###$=*!;;!*=$$========$$$====*!;:-,.&nbsp;&nbsp;<br>&nbsp;..-::~--,-:!*===$$$###############$$$$$$$$$$==**=$########@@@@##$$=*;::;*$$$$$$$$$$$$$===**!;:-,.&nbsp;&nbsp;<br>&nbsp;&nbsp;.-:!~~~--:!*===$$$$$#############$$$$$$$$==***=$##############$$==*!*!:;*=$$$$$$$$$$$==***!:~-,.&nbsp;&nbsp;<br>&nbsp;&nbsp;.,~;~~---~;*====$$$$$$########$$$$$$$$$==**!!*$############$$$$==*!;!*!;;*=$$$$$$$$===***!;:~-,&nbsp;&nbsp;&nbsp;<br>.~,&nbsp;..,..,-~;*======$$$$$$#$$##$$$$$$====**!;;;!=$$###$$$$==$$===**!;:;!;:;!*==$$$=====***!;;:~-.&nbsp;&nbsp;&nbsp;<br>--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,-;*=========$$$$$$$$$$$$===**!!;;:;!***==**;::::;!**!!;:~~:::~~:;;!*======****!!;:~~,&nbsp;&nbsp;&nbsp;&nbsp;<br>-,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-:!=====================**!!;;:::;*=$=!;:~-,,,--~:;;::~,,,,---~:;;:;!*******!!!;::~-.&nbsp;&nbsp;&nbsp;&nbsp;<br>.-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,~!*=$$=========*****!!!;;;::~~:;*=$$$$=*;:~~--------,,,.,,,,,~:;;:::;;;;!!!;;;::~-,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-;*==$$$$====***!!!;;::::~~~~:;*=$$$#$##$$$=*!;;:~~---,-----~~~:::::~::::::::::~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,:!*=$$$$$====***!;:~~~~~~~:;!*=$$$$$$$$$$$$$==*!!;;:~~~~~~~~~~:::::~~~:::::~~~~-,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-;*==$$$$$$=====*!;:~~~~~~:;**=$$$$$$$$$$$$$======*!;:::::::::::::::::::::~~~~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,~!*=$$$$$$$$=====*!;;;::~,,,-~:;;!!!!!!!!!;;;;;::~~~-----,,,,,-~::::;;;:::~~~-,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-;!==$$$$$$$$$=====*!!!!;:~,&nbsp;.--:!;::;;::;:::~~~~-------.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,~:::;!!;::~~~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~;*===$$$$$$$$$$$==******==*:~-:==*=$$**$=*;:;!;~~;:-~~.&nbsp;&nbsp;&nbsp;.-:;::!**!;:~~~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,:!*==$$$$$$$$$$==========$$=$*!==*$##$$##$==$$$=***:~,..,-~;;:;!**!;:::~:-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-:!*===$$$$$$$=========$$$$$$$===$=$$==$$$==$$$!;;;::~~-~~;::;!!*!;;:::~~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~:!**===$$$$========$$$$$=$$$$====$$$$==*******!!;;::-~~::::;!!!;;:::~~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-~:!!**==========$$$$$=$$$===$$========*******!;:~~~~~~~:::;!!;;;::::~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-::;;!**=========$$$$$$$$$$==$$$=====***!!!*!;;:~~~~~~~:::;;;;::::::~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~:;::;!!**=======$$$$$$$$$$$$$=======**!!!;;;;:::::~~~~::;;;;::::~~,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.:;;;;:;;!***======$$$$$$$$$$$$$$$$===**!!;;::::::~~~~:::::::::::~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-;!;!;;;:;;!!***=====$$$$$$$$$$$$$$$$====***!!!;;::::::;;::~~:~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>,.......&nbsp;&nbsp;&nbsp;&nbsp;.~!*;!!!!!;;:::;;!!****====$$$$$$$$$$$$$#$$$$$====***!;;;;;::~~~~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>=*!!;::~,..-;*$*;!***!*!!;::::;!!****===$$$$$$$$$$$$$$$$$$$====**!!!!;:~~~~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,--~,.&nbsp;&nbsp;&nbsp;.-,<br>###$$$$$$$$$$$=!;!******!;;:~~~:;;!!!**==$$$$$$$$$$$$$$=====*****!!;;::~~~-,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-;!====*!!==$=<br>##############*!!!***==**!;;:~~~~::;;;!!**===============******!!;;:::::;**;-..&nbsp;..,,~*$$$$$$$$$#$###<br>############$*!!******===*!;;:~~~~~~:::;;;!!*********!!!!!!!;;;;;:::~:!=$$#$*!~~:~;!=#####$$########<br>##########$$;;!*******====**!;:~~~~--~~~::::;;;;;;;;;;;;::::::::~~~~!=######$$$$=$$$$$##############<br>#########$*;;!*****=======***!;:~~~~~~~~~~~~~~~:::::~~~~~~~~~~~~~--~*###############################<br>#######$=!!!****==*========***!;;:~~~-~~~~~~~~~~~~-----------------~$###############################<br>**====*!!!**===*============***!!;:~~-----~~~~~~~---------------,,-:$###############################<br>.,-:;!!!**====================***!;::~~~~-~----~-------------,---,-;################################<br>:;!!*****======================***!;;:~~~--~-------------------,,--!################################<br>!*******=========================***!;::~~~--------------------,---=################################<br>!!*============$==================***!;;::~~~-----------------,,,--~*=$$$###########################<br>!!;!*============$$================***!!;;::~~~--------------,,,,-,&nbsp;&nbsp;....~!=$$######################<br>!!!!!*==$=========================*****!!;;:::~~~-----------,,,,,,,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,~;!*=$$##############<br>!!!!!!!*=$========================*****!!!;;:::~~~---------,,,,,,,,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,-~:!$$##########<br>!!!!!!!!!*==$====$================******!!;;;::::~~~~-----,,,,,,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...-!=$$$#####<br>!!!!!!!!!!!*==$$$$$=======***************!!;;:::::~~~~----,,,,,,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,-:;!*=$<br>!!!!!!!!!!!!!!*$$$$$$=====***************!!;;::::~~~~-----,,,,,...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,,-~'
+                                        },
+
+                                        '따님': {
+                                            name: '따님',
+                                            type: 'file',
+                                            content: '@@@@@@@@@@@@@@@@@@@@@@@@@#$*=###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@######<br>#@@@@@@@@@@@@@@@@@@@@@@@#*;:~~:!=$#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>#@@@@@@@@@@@@@@@@@@@@@#$!!!******:*##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>##@@@@@@@@@@@@@@@@@@@#=*!==$$##$===*=#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>##########@@@@@@@@@@#=!!*=$$######$=*=#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>$$$$$$##############$**===$$$$#####$$=$$@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>=====*=========$$$$$==$$$$$########$$$$*=@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>!**===*=$==*****=$$$==$$$$##@@@@@@###$$=$!$#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>::;:;!**==*****===$$$$$$$############$$=*$:;*=*=$##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@###$$$####@<br>~~~:~~~~:;!***==$##$$$$#######@@######$=*;*---~;!*=$####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@###$=*;!;;;!#@<br>~~-~~~~--~:;*$$$########################=*!;-,--::;;;!*=*=$#@@@@@@@@@@@@@@@@@@@@@@#$=**=$$====**;!$@<br>::~~:::~~~~;!=$$$########@############$$==;;;,,,,---,,-~~~;*$=**$#@@#######@@@#$==*=**=$$##$#$==*=$@<br>:::;;;;;;!***====$$#############$$$$$$==**::*~,.,,,,....,,,-~--~:;!:!!!***==!:!!*==$#########$$==*$#<br>:;::!!*****===$$#$=$######$$*;;=====$$=*!;::=;,..,,,--.&nbsp;&nbsp;.......,,,-~~~~----:;!*=$#######@@#$$$$=*$@<br>~:;::;*=**!***=$==$$$$$$$$$$###$$$$==****;~-~:-...,---.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....,,-,,,,-:::*$##########$$$$#$$=*$@<br>::;;;!*==*!;:;*=$$$====**========***!!!!::~-:~,,,,,---,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.--,,,...,,~-;$$##$$$#######$$#$$$$==#@<br>!!!*====*!;:~~!=$#$==$=:~;***!;;;;;;::~--~~~-,,,,,,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-~--,,,,----;===$$#########@##$$$$$==#@<br>====**!;:~---~;===##$$#$*!*$$=*;;!!:~~,---,----,,,,..&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~~--,.-,--~:!*=$####@@##$######$$$$$$#@<br>$=*!!;::---,---~;==$######$$$$$=!=**!:~-,,,~-~~~:~-,&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-~-,,,-,,-:;**=$######@#####$###$$$$#@@<br>**!;;::-----~~:,,-~!!*=$$$$===***!::::;:--,,,,----.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,----,,,,,-:!**!*$#####@@#@#######$$####<br>;;:;;;;~~---~~-,:,~.-;*$===!!*!!:~----~~,,,..,,,,&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-~~~-,,,,-:!*==$$$###@@#@@@@###$$$#####<br>*!:::::;~;:::-;~=,---~:::!!;;-~~~~~~;-~~--~,,,,.&nbsp;---.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-~~--,-,,-:!!**=$#####$@#@##@@#########<br>:;:::::!~;**!;;~.:;-;:!;:!=*;~::;:::--~,.--.,.....--.&nbsp;&nbsp;&nbsp;.,,..,,--,,,,-~:::!*==$##@@@@#@@@@@@@@######<br>~~~~:;;*:**=;;;;~:~:**!!;;!!*;~-;~~~;;:-:~:~~.&nbsp;.,.,,.&nbsp;&nbsp;.,,,....--,,---~:;;!*===$###@#@#@@@@##@#####$<br>:---~!!=!==*!!!*::;=$=*;~~:!*:~,.!~;;*~.;!*$;.&nbsp;&nbsp;.,,,.&nbsp;&nbsp;,:,...-,--~,--~;!!**==**===##$###@@@#@@####$=<br>:~---;;!;!*!!=**;*$#$==*;;~~::;*:=**;:,.-!;=;.&nbsp;.~-~,..,-;,-;~:-----~:;;;!*=$$=$$=$#$==$#@@@@@@####$=<br>--,,,~;!;;!;!;;=$*=$##$==*;~:;;$=$$!~.&nbsp;&nbsp;~=!=~&nbsp;.,~;,.&nbsp;,-~~::;-,,,,-:-~;!!!*=$$$$###$====$#@@@@######$<br>,,,..::!:!!!;:~~*$###@@#$$;~;==#=*;~.&nbsp;&nbsp;,=$*;,&nbsp;,~--...,-;*;;:,-,,~-~~:;!!!*==$$$######@##$$###$$$$##$<br>.....,.,~-~~~:;!!!*!=##$##=*;*$$$*:.&nbsp;&nbsp;,*$#=:..,;~&nbsp;..,,!$*-.&nbsp;&nbsp;-!~-~,::;*=;;:==$===$$#$$#####$=$######<br>-,,.....,..,,,,.,.,--,.,,-:$!;!=#=,&nbsp;&nbsp;-!$$$*,&nbsp;,~;,.:!,-!$=,&nbsp;.-;*=;=-~!;!*===*!*===*=$$===**!*=$$#####<br>---,,,,~~~;!**!!!;!!~.,!=*:~,.,~!*~,-;*==;-.,~:,&nbsp;,=:-!$$:&nbsp;&nbsp;-!**=!**!!*!*=$=$$=*!!*!!*===****=#######<br>~------~:!*****====!-.:*=;...&nbsp;,-,~!!**:;!:--~-.&nbsp;&nbsp;-;-~=$$-&nbsp;.;=#$=**==;;;!!*=$$=*!;;;~;*=!;;**=$####@@<br>~:~~~----;;;:;;;;*=*-.~!*:.&nbsp;&nbsp;&nbsp;-;:.~=$=;-~;~:~-..--~-!=$$-&nbsp;,*$##$=*:;!***=*$$$=!!!*!;*===!;;!*==##@@@<br>;:--,,--,-~:~~~~~:!*~..:!;:,~;;!!~.!$$;,,;---,,-~:~:***;,.~=$##$=*;!=$$=!$###$==!!=*=***!;;:;=$$##@@<br>~~--,,,~;~~~-,,;:-~-;~..&nbsp;~!;!***-&nbsp;,!$$!~,-~:---::-.-;!*!;!$==######$#########$=*;!:*====*;;!*=$$$##@<br>,...,-~:;:~~~:;::;-!*=*-.....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.;$$!~-:,:~~~,,,:==*;-.&nbsp;.-,&nbsp;.~::-,:=#####**=*!**!~-;=#=*!*;*$$$$$#<br>;;!!;~---~:~-:**:;:*!:===*:--.....,!$=:-,;:!;:~-;$#$;.&nbsp;~!*!-..,,:*!~,-::!*;=;!**===$$=*==***===$####<br>:;!!!!!;::;:::;;::!;;;;~!=$*;~.....:!;~~-:!;;;:*#@#!.&nbsp;.;**!,&nbsp;&nbsp;&nbsp;,;*;,-*=:--,.,~-:*=*===*===*!*=$$$###<br>~~:~:::;;::::~~~~~;:-:;;~!!;~,.&nbsp;&nbsp;&nbsp;,:;;;;;;*!*==#@#!-.&nbsp;&nbsp;-!=*;--~;!:-,!$$=**!;~~-,-:******!!!;*$$#####<br>-,,.,,--~~;!!~~:~~~~~!=!:*;;:,.&nbsp;.-:;!!!========$$;,--,..-~:~~~~~-.-!##$$$=====!;--~~;;!!;:::!=$$####<br>--,,.-~!--:;!;;!;*!*===*==;~-,,,.~::!**$#$$=*=*;-.,~~!**:,.....-:!!*;!==$**;====;:..,,,,-~:;*$$$####<br>:!*===~-,--:*==*!~;!**;!*:--,--,,-~!=$$###$=***;.&nbsp;.-;=#####$!**;;:;-!;;:!!==$=*;~-,.&nbsp;...,:!*==$####$<br>::~~~~*~~;!=*$$*!:-,.,,~!*!!;~,..,~!==$##$$=!;~~-..,;=*!*:::!;;;*:;!~-,,,~;;::::~;~--~,.,--;*$$#####<br>;;;*!-----~;=$=*;:;;~,,--:;:~-,,,,~**==$$$=!:-,.:~.-:!!~::~-;;;;!!=*!!!!!;;~;**!:-!!*~~--:**==$#####<br>;;:~~--,~~~;**!!!;~:::-,,,!!!:,,,,~!***===!:-,,~!!:~:*=*:~-~~:~:::::~~:::;;!*!::~:=**;~~~;*===$$###$<br>**!:~~~~~~~~~::;!!;:-,,--:===!:-,-~:!;;:;;~~--~:;**=*!*=*;!;:;;--~;!!!==$*!:;;;;::!*==**!;!====$####<br>!;:~---,------:*=$=!~--~-~=$$==!:,~;!;;;;!!~-:!***===*:~;==*;;;;!*=!!!!===!!!**==*====****!*===$####<br>::--,.,-!~~;~--:;!*!!!;~;*$$$$$$=!,~~:~,-=$==$$$$;;;-,...----~:;!*==*=**$$=$=*!!;:*$$$$=****=$$$####<br>:~--!**;~---,,.;:**;;:;!*;!*$$####=-.&nbsp;~$#@@@@@###;-:*=$=;~***=$$#$=*=$$###$$=$###$**###$$==**$$$####<br>::*=*;:~-,,,~~~:,,~:;!**;;:;;:~!*==!;$#@@@@@@@@#*==!;;!===$$=*!;;~~~------~;=$##@@###====*==#=$$$###<br>;===*;~,-~~:~-,,,,,,:;;==$$=*****!;:;!***=$$#$$=;!=$#=!*=*===*!;;:~~~~:--~--~;!==*!=*=#$=$=*!*$#####<br>!=$$*;::::~,-,.,&nbsp;...,,-;!=$$$=*=**=*!;:;*!!!***===*=$=!*=*****!;**;;;:::::::~:;;!**=**=*=$$=;!=$$###<br>*$#$*;:~:~,--,..&nbsp;...,..,~;=$###$$$$$$=!;*====***=$*$====**!!!;:~;***=*!!*:~!!!!;;*===$$=*!*=!;==$$$#<br>*=#$=;-;-,--.......,.&nbsp;&nbsp;.,~:!=#########$$$$$$$==*!=!!*;*=$*;~~:::~!=$$==$=*!=*===**=$$$##$!:!*;*=$$$#<br>*=$$!-,:-,...&nbsp;....-,.&nbsp;...,-~;**$$$$#####$=!!!!;::~;-~~-;;=:~~~~;!!=$$$$$$=*!=$##$===$$###=:~!**=####<br>**==~,--.........~~.&nbsp;&nbsp;&nbsp;...,-----~::;!!*;;;:~~::~:::,-~~:*~$~:;~:;=*$$$$$$#$**=$###$=$#####$*!$$$$###'
+                                        }
+                                    }
+                                },
+
+                                '홈페이지.txt': {
+                                    name: '홈페이지.txt',
+                                    type: 'file',
+                                    content: 'https://www.kopo.ac.kr/seongnam/index.do'
+                                }
+                            }
+                        },
+
+                        '사진.txt': {
+                            name: '사진.txt',
                             type: 'file',
-                            content: 'hello\nhi\n111'
+                            content: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,-:;;;:;!!!***!!;;:--:~~::-,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,~~~~~:!!;;*=$$$$$$$$$$$$$$$$$$$==$$$$$$====*;~~~,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,~;*==$$$$$###################################$$$$$===*;::-,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.:!==$$$$########@###################################$$$$$$==*;~,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,;*=$$$#####@@#@@@@@#####################################$$$$==!:,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,;*=$$$##################################################$$$$$=*;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.:*=$$$################################################$$$$$===*!~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.:*=$$#################################################$$$$$$$==!:.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.:*=$$$$###############################$#############$$$$$$$$$==*;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.:*$$$$$$##############################$$########$$$$$$$$$$$$$$$=*;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~*$$$$$$$$======$$$$$$$$$$##########$$=**===***!!!!!!;;;!==$$$$$$=*;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~!=$$$$=!;~----------,,-:;!==$#######=*!::;;~,..&nbsp;&nbsp;&nbsp;......,-~;!=$$$$=*;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~*=$$$=!-......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-:;!==$#####$*!;::;~~-,,....,,,-----,~!=$$$=*!,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,;*$$$$=*;;;!!****!!!!;;;;;;!!!*=$$$$###$$==**=======$$$$$$$$===!;!*=$$==*:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~*$$$$$$==$$$#########$$$========$$######$$$$$$$$$$##########$$$==*=$$$$==;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~=$$$$$$$$############$$$$$$====$$#######$$$$$$$$$$$$$$$###$$$$$$$$$$$$$$=;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~=$####$$$###$$=*!;:~~~:!!**====$$######$$$$$$$==*!~,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~-~;*==$$$$$$$$=!.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-=#######$$=*:--~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,;-,-!*=$$$$#####$$$$$==!~~;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-*:,,-:!=$$$$$$$$*.&nbsp;&nbsp;&nbsp;,;!**~.&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;,;!~&nbsp;&nbsp;&nbsp;&nbsp;-=#######$*;~~;*=*,&nbsp;&nbsp;&nbsp;~*=;~-:=$$$$$####$$=====*::;!*!~-~!===**!!*=$###$$$$=,&nbsp;&nbsp;.*$$=!~-,&nbsp;<br>&nbsp;&nbsp;,--!=!;~&nbsp;&nbsp;~$#######$$===$#$$=*!*===**==$$$$$$$###$$====$=======$$$###$$$$$######$$$$=-&nbsp;&nbsp;!$$#$*;:-&nbsp;<br>&nbsp;.-&nbsp;.;===!,&nbsp;:$################$$$$$$=$$$$$#$$$$$###$=====$$$$$$$$##################$$$=~&nbsp;.*$###=!:-&nbsp;<br>&nbsp;,-.,*$$=*-&nbsp;;$#####################$$$$####$$$$#####$=====$$$$$$###################$$$=;&nbsp;,;=###$*;-&nbsp;<br>&nbsp;&nbsp;~-~===*!-.;$############################$$$$$#####$$====$$############@@#######$$$$$=;..,:*=$$=:&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;-;*;:-,..:$$$#########################$$$$$$#####$$=====$$##########@@@@@#####$$$$=*:~;:;!*==:&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;-;,...&nbsp;.:=$$########################$$$==$$#####$$======$$$$#######@@@@#####$$$$$=*:*$$=*!*~&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:,..,~!!*$$$$#####################$$=====$#####$$==***==$$$$#####@@@@######$$$$=*;!$$#$*!!,&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:,.,;==*!==$$$###################$$$=*===$######$==*!!*==$$$#######@######$$$$==!:**!=$==,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;--:**!!!===$$$$################$$=**===$#@#####$=**!!*==$$#############$$$$==*;;=*==$$*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,!***~-:;**==$$$$$#############$$=*****=$$$$$##$=*****!*==$$$###########$$$$=*!;!=$$$!;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~*=*!!!!**====$$$##########$$$=*!!!:~-;*===**!:-,-;!**===$$$#########$$$$===:::==!:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;==*!;!**====$$$$$$$$$$$$$$$=*!;:,&nbsp;&nbsp;.~:~~::::~-,~;*==$===$$$$##$$$$$$$$==;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--::~-:=======$$$$$$$$$$$$$$==**;::;!;:::!!*!!!*====$$$$$$$$$$$$$$$$$$!~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:=======$$$$$$$$$$$$$$$========***===**======$$$$$$$$$$$$$$$$$$.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;======$$$$$$$$$$$$$$$$$===$$$$==$$==========$$$$$$$$$$$$$$$$!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,*=======$$$$$$$$$$$===$=====$$$$$$===$===*=======$$$=$=$$$$=~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.*======$$$$$$$$==***==**!!!;!!!!;;!!!!**!!!!!***======$$$$;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=============**;:~~------~~~~~:~~----,,,.&nbsp;&nbsp;,:;!**=======$:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-==========*!;:~,,..,,,,,----,,,-,,-----~::~:;!*=========!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-===**===**!;;;;!;;;;;;;!!!!!;;!!;;;;!****!!**==========*,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~!********!!!!!!!!!;;;!!!!!!***!!**************==**==***-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-*=******!!!!!!!!!!!!;;;:;;;;!!************************-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~=*!!!!!!!!!!!!!!!!!;::~~~:;;!!!******************!***-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.=**!!!!!!!!!!!!!!!!!;;;;;;!!!!******======****!;!**=*,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;***!!!!!!!!!!!;;;;;!!!!!*!!!****========**!!;;!*****-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~***!!!!!!****!!!!!!!!!!**********======**!;:;!*****=~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~***!!;;;!!!!!!!!!!!!!!!******=========**!::;!**===*=~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~****!!;;;;;!!!!!!!!!!!!**************!!;;;;!**====*=*-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~****!!!;;:::;;;!!!!!!!!!!!!!!!!!!!!;;;;;;!!**=====***:.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.!!*****!!!;;:~~~~::::~:::::::~~~~~~~:;!!!!**======***!:,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.~!!!!!!!!!!!;;;::~--,,........,,-~:;!!*******=====****!:..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..:!!!!!!!!!!!!!;;;::~--,,,,,--~:;!!**********=====****!:&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;,;!!!!!!!!!!!!!!;;;;::::::;;;;;!!!!***********===*=**!:&nbsp;-:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:-&nbsp;&nbsp;-;!!!!!!!!!!!!!!;;;;;;;;;!!!!!!!!!***********==*****!~&nbsp;-;;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,!-&nbsp;&nbsp;&nbsp;~;!!!!!!!!!!!!!!;;;;;;;;;;;!!!!*!*****************!~..~:;;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-;:.&nbsp;&nbsp;&nbsp;-;!!!*******!!!!!!;;;;;;;!!!!******************!!~&nbsp;&nbsp;-::;;!:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.;;:~.&nbsp;&nbsp;&nbsp;,:;!!*****!!!!!!!!!!!!!!!!*************=****!;~,&nbsp;&nbsp;-~::::;;-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.-~:;;::~.&nbsp;&nbsp;&nbsp;.~;!!***!!!!!******!!*********************!;-.&nbsp;&nbsp;-~:::::::::~:,,.&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,~-,-~::;;;:,&nbsp;&nbsp;&nbsp;&nbsp;,~;!***!!;!!!***************!!!!!!****!;:.&nbsp;&nbsp;.-~~::::::::~;:~~~:;-.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,--~-...,~::;;;::,&nbsp;&nbsp;&nbsp;&nbsp;.-:;!!!!!;;;;!!!**!!!*!!!!;;!!!!!!!;;~,.&nbsp;&nbsp;.~~:::::::~:~~:~----~-~<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-,~~~-~--,.&nbsp;&nbsp;&nbsp;.--~:;;;;:,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-:;;!!;;:::::;;;;;;::::::;;;!!;;~-.&nbsp;&nbsp;&nbsp;,~:::::::::~~---------,,<br>&nbsp;&nbsp;&nbsp;~~;!;;;:~-,...&nbsp;&nbsp;&nbsp;.,--~:::;;;:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,-~:;;;;::::::~::::::;;;;;;;:~-,&nbsp;&nbsp;&nbsp;&nbsp;-::::~~::~~~:~-----,,,,,,<br>:;;;;;;;:~----,.&nbsp;&nbsp;&nbsp;&nbsp;.,,--~:;:;;;;~.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,-~::::::::::::::;;;;;;::~-.&nbsp;&nbsp;&nbsp;&nbsp;.-::::~~~:~~:~~------,,,.,,<br>;;;:~::~~-----,.....,,,,--~::::;;:~-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,-~~::::::::::::::~~~~-,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,~::::~~~~~~~~:~------,.,,,-<br>::~,.,---~-~--,...,,,,..---~::::;;:~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,--~~~~~~~~~~-----,..&nbsp;&nbsp;&nbsp;&nbsp;.-~~::~~~~~~~:~~----,---,,,,--<br>~~,&nbsp;&nbsp;,----~--,,.,,,,,.&nbsp;.,,,-~::~::-.&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,,-----,,,,,.,,,.&nbsp;&nbsp;&nbsp;&nbsp;.,.&nbsp;&nbsp;.---~~~~~~~~~-,,,,---,,,,,,<br>-.&nbsp;&nbsp;,----~~--,,,,,-,.&nbsp;&nbsp;.,,--,~~~-.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;.,,,,,,..............--,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,--~~~-::~-,,,,,,--,,,,,,<br>&nbsp;&nbsp;&nbsp;.----~----,,,,-,,...,,..,--~~,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.,,,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,----,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.--~~~--~~,,,,,,,,-,,.,,,<br>&nbsp;&nbsp;.,---------,-----,,..,....,,-~,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;..,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.----,,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----~~~-,,,,,,,,,,,,.,,,<br>&nbsp;.------------------,.,,...&nbsp;.,,,,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,,,,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,,,,.,,,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,------,,,,,,,,,--,,,,,<br>,---------------~----,,,..&nbsp;&nbsp;.,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,---,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...,,,,,,,--,&nbsp;&nbsp;&nbsp;&nbsp;.-,-~~~----,,,,,,,,,,,,,-<br>---------~---~~~~~~~~---,.&nbsp;&nbsp;&nbsp;.,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,---,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,,--------,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---~~~----,,,,,,,-------<br>----,,-----~~:::::::~~~--,..&nbsp;.,,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..,,,..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----,,,,,,,,,,,.&nbsp;&nbsp;&nbsp;&nbsp;.,-~~~-,,-,,,,,---------<br>---,,,--~~~~::::::::::~~--,,..,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,,------------,..&nbsp;&nbsp;&nbsp;.----,,---,-,--~~~~~~~~<br>---,,--~~~:::::::::::::~~~--...,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,,,,,,,,,-------,,,&nbsp;&nbsp;&nbsp;&nbsp;,--,,-----~~~~:::~~~~<br>--,,,-~~:::::::::::::::::~~-,.,,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.,,---~~~~~--------~-.&nbsp;&nbsp;..,,,----~~~~::::::::~<br>'
+                        },
+
+                        '소개.txt': {
+                            name: '소개.txt',
+                            type: 'file',
+                            content: '이름 : 김태환\n성별 : 남성\n생년월일 : 1993/09/08\n전화번호 : 010-7***-****\n이메일 : rlaahrns022@naver.com\n소속 : 한국 폴리텍 성남 캠퍼스 인공지능소프트웨어과 1학년'
+                        },
+                        '팀원.txt': {
+                            name: '팀원.txt',
+                            type: 'file',
+                            content: '이민수 : https://github.com/Minsoolee12345\n김영중 : https://github.com/0joong\n조시현 : https://github.com/chosihyeon'
+                        },
+                        'GitHub.txt': {
+                            name: 'GitHub.txt',
+                            type: 'file',
+                            content: 'https://github.com/AoKuShi'
+                        },
+
+                        'BOJ.txt': {
+                            name: 'BOJ.txt',
+                            type: 'file',
+                            content: 'https://www.acmicpc.net/user/rlaahrns022'
                         }
                     }
+                },
+                'command.txt': {
+                    name: 'command.txt',
+                    type: 'file',
+                    content: '- cls : 화면 지움\n- dir : 현재 경로 구성 확인\n- cd A : A(디렉터리)로 이동(\입력 시 최상위 경로, 하위 경로 입력 시 해당 경로로 이동)\n- md A : A(디렉터리) 생성\n- rd A : A(디렉터리) 삭제\n- type A : A(txt파일)의 내용을 출력\n- ren A B : A의 이름을 B로 변경\n- del A : A(파일) 삭제\n- copy A B : A를 B로 복사(경로)\n- echo A > B : A라는 내용을 갖는 B(txt파일)를 생성'
                 }
             }
         };
@@ -127,7 +213,7 @@
         }
 
         function processCommand(command) {
-            const args = command.split(/\s+/);  // Split by any whitespace characters
+            const args = command.split(/\s+/);
             const cmd = args[0].toUpperCase();
 
             switch (cmd) {
@@ -171,16 +257,34 @@
         }
 
         function changeDirectory(path) {
-            if (path === '..') {
+            if (path === '\\') {
+                currentPath = [];
+                currentDir = root;
+            } else if (path === '..') {
                 if (currentPath.length > 0) {
                     currentPath.pop();
                     currentDir = getDirectoryFromPath(currentPath);
                 }
-            } else if (currentDir.children[path] && currentDir.children[path].type === 'dir') {
-                currentPath.push(path);
-                currentDir = currentDir.children[path];
             } else {
-                printOutput('지정한 경로를 찾을 수 없습니다.');
+                const newPath = path.split('\\');
+                let tempDir = currentDir;
+                let tempPath = [...currentPath];
+                for (const segment of newPath) {
+                    if (segment === '..') {
+                        if (tempPath.length > 0) {
+                            tempPath.pop();
+                            tempDir = getDirectoryFromPath(tempPath);
+                        }
+                    } else if (tempDir.children[segment] && tempDir.children[segment].type === 'dir') {
+                        tempPath.push(segment);
+                        tempDir = tempDir.children[segment];
+                    } else {
+                        printOutput('지정한 경로를 찾을 수 없습니다.');
+                        return;
+                    }
+                }
+                currentPath = tempPath;
+                currentDir = tempDir;
             }
         }
 
@@ -191,7 +295,7 @@
                     dir = dir.children[segment];
                 } else {
                     printOutput('지정한 경로를 찾을 수 없습니다.');
-                    return root;
+                    return null;
                 }
             }
             return dir;
@@ -296,7 +400,9 @@
         function typeFile(filename) {
             if (filename.endsWith('.txt')) {
                 if (currentDir.children[filename] && currentDir.children[filename].type === 'file') {
-                    printOutput(currentDir.children[filename].content);
+                    let content = currentDir.children[filename].content;
+                    content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>'); // 링크 변환
+                    printOutput(content, true);
                 } else {
                     printOutput('파일을 찾을 수 없습니다.');
                 }
@@ -325,26 +431,56 @@
             }
         }
 
-        function printOutput(text) {
+        function printOutput(text, isHTML = false) {
             const output = document.createElement('div');
             output.className = 'output';
-            output.textContent = text;
+            if (isHTML) {
+                output.innerHTML = text;
+            } else {
+                output.textContent = text;
+            }
             terminal.appendChild(output);
         }
 
         function adjustFontSize() {
-            let aspectRatio = ((window.innerHeight) / (window.innerWidth + 1280)) + 1;
-
+            let aspectRatio = ((window.innerHeight) / (window.innerWidth + 1280)) + 1.0;
             document.querySelector('body').style.fontSize = aspectRatio + 'em';
         }
 
-        // 페이지 로드 시와 윈도우 크기 변경 시에도 함수 호출
-        window.onload = adjustFontSize;
-        window.onresize = adjustFontSize;
+        function typeWriter(text, element, delay = 50, callback = null) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, delay);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
 
-        // Initial prompt creation
-        updatePromptPath();
-        createPrompt();
+        function startTypingAnimation() {
+            let index = 0;
+            function typeNextLine() {
+                if (index < welcomeText.length) {
+                    const p = document.createElement('p');
+                    terminal.insertBefore(p, welcomeMessage.nextSibling);
+                    typeWriter(welcomeText[index] + '\n', p, 50, typeNextLine);
+                    index++;
+                } else {
+                    createPrompt();
+                }
+            }
+            typeNextLine();
+        }
+
+        window.onload = () => {
+            adjustFontSize();
+            startTypingAnimation();
+        };
+        window.onresize = adjustFontSize;
 
     </script>
 </body>
