@@ -213,7 +213,9 @@
         }
 
         function processCommand(command) {
-            const args = command.split(/\s+/);
+            if (!command) return; // 빈 명령어를 무시합니다.
+            
+            const args = command.split(/\s+/).filter(arg => arg); // 공백만 포함된 명령어를 무시합니다.
             const cmd = args[0].toUpperCase();
 
             switch (cmd) {
@@ -221,34 +223,66 @@
                     terminal.innerHTML = '';
                     break;
                 case 'CD':
-                    changeDirectory(args[1]);
+                    if (args.length === 1 || !args[1]) {
+                        printOutput('경로를 지정해야 합니다.');
+                    } else {
+                        changeDirectory(args[1]);
+                    }
                     break;
                 case 'COPY':
-                    copyItem(args[1], args[2]);
+                    if (args.length < 3) {
+                        printOutput('소스 및 대상 경로를 지정해야 합니다.');
+                    } else {
+                        copyItem(args[1], args[2]);
+                    }
                     break;
                 case 'DIR':
                     listDirectory();
                     break;
                 case 'DEL':
-                    deleteFile(args[1]);
+                    if (args.length === 1 || !args[1]) {
+                        printOutput('파일 이름을 지정해야 합니다.');
+                    } else {
+                        deleteFile(args[1]);
+                    }
                     break;
                 case 'MD':
-                    makeDirectory(args[1]);
+                    if (args.length === 1 || !args[1]) {
+                        printOutput('디렉터리 이름을 지정해야 합니다.');
+                    } else {
+                        makeDirectory(args[1]);
+                    }
                     break;
                 case 'RD':
-                    removeDirectory(args[1]);
+                    if (args.length === 1 || !args[1]) {
+                        printOutput('디렉터리 이름을 지정해야 합니다.');
+                    } else {
+                        removeDirectory(args[1]);
+                    }
                     break;
                 case 'REN':
-                    renameFile(args[1], args[2]);
+                    if (args.length < 3) {
+                        printOutput('변경할 이름을 지정해야 합니다.');
+                    } else {
+                        renameFile(args[1], args[2]);
+                    }
                     break;
                 case 'VER':
                     showVersion();
                     break;
                 case 'TYPE':
-                    typeFile(args[1]);
+                    if (args.length === 1 || !args[1]) {
+                        printOutput('파일 이름을 지정해야 합니다.');
+                    } else {
+                        typeFile(args[1]);
+                    }
                     break;
                 case 'ECHO':
-                    echoToFile(args.slice(1).join(' '));
+                    if (args.length === 1 || !args[1]) {
+                        printOutput('출력할 내용을 지정해야 합니다.');
+                    } else {
+                        echoToFile(args.slice(1).join(' '));
+                    }
                     break;
                 default:
                     printOutput('인식할 수 없는 명령어입니다.');
